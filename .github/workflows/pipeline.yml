@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+      - uses: actions/checkout@v2
+
+      - name: Setup nodev14.17.6
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14.17.6'
+
+      - name: Install packages
+        run: npm install
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Test
+        run: npm run test
+
+      - name: Publish to npm
+        run: npm publish
