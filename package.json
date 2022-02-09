@@ -1,0 +1,44 @@
+{
+  "name": "yarnthisdir",
+  "version": "1.0.0",
+  "description": "Transform projects that use npm to yarn",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "nodemon lib/index.js",
+    "lint": "eslint . --ext .ts",
+    "start": "node lib/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "tsc -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Olowotemple/yarnthisdir.git"
+  },
+  "keywords": [
+    "npm to yarn",
+    "package",
+    "npm",
+    "yarn"
+  ],
+  "author": {
+    "email": "temple.olowonigba@gmail.com",
+    "name": "Temple Olowonigba"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Olowotemple/yarnthisdir/issues"
+  },
+  "homepage": "https://github.com/Olowotemple/yarnthisdir#readme",
+  "devDependencies": {
+    "@types/node": "^17.0.16",
+    "@typescript-eslint/eslint-plugin": "^5.11.0",
+    "@typescript-eslint/parser": "^5.11.0",
+    "eslint": "^8.8.0",
+    "nodemon": "^2.0.15",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2"
+  }
+}
