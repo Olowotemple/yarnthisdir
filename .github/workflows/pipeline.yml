@@ -32,7 +32,20 @@ jobs:
       - name: Build
         run: npm run build
 
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+      - name: Bump version and push tag
+        id: gitTagger
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: 'none'
+          WITH_V: false
+
       - name: Publish to npm
-      - uses: JS-DevTools/npm-publish@v1
+        if: ${{ contains(join(github.event.commits.*.message, ' '), '#publish') }}
+        uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
+          tag: ${{steps.gitTagger.outputs.tag}}
