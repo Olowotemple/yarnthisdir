@@ -1,6 +1,6 @@
 {
   "name": "yarnthisdir",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "Transform projects that use npm to yarn",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
