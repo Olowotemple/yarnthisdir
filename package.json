@@ -11,13 +11,8 @@
     "build": "tsc",
     "dev": "nodemon lib/index.js",
     "lint": "eslint . --ext .ts",
-    "prepare": "npm run build",
-    "prepublishOnly": "npm test && npm run lint",
-    "preversion": "npm run lint",
-    "postversion": "git push && git push --tags",
     "start": "node lib/index.js",
     "test": "jest --config ./jestconfig.json --verbose",
-    "version": "git add -A src",
     "watch": "tsc -w"
   },
   "repository": {
