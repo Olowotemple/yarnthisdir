@@ -41,6 +41,7 @@ jobs:
         with:
           fetch-depth: '0'
       - name: Bump version and push tag
+        if: github.event_name == 'push'
         id: gitTagger
         uses: anothrNick/github-tag-action@1.36.0
         env:
