@@ -13,10 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
 
       - name: Setup nodev14.17.6
-      - uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: '14.17.6'
 
@@ -26,8 +26,13 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Install Yarn Globally # used for the testing step below
+        run: npm install yarn --global
+
       - name: Test
         run: npm run test
+        env:
+          CI: true
 
       - name: Build
         run: npm run build
@@ -40,8 +45,12 @@ jobs:
         uses: anothrNick/github-tag-action@1.36.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEFAULT_BUMP: 'none'
+          DEFAULT_BUMP: 'minor'
           WITH_V: false
+
+      - name: Bump version in package.json
+        if: ${{steps.gitTagger.outputs.part && contains(join(github.event.commits.*.message, ' '), '#publish')}}
+        run: npm version ${{steps.gitTagger.outputs.part}}
 
       - name: Publish to npm
         if: ${{ contains(join(github.event.commits.*.message, ' '), '#publish') }}
