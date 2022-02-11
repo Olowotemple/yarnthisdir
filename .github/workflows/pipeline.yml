@@ -50,7 +50,7 @@ jobs:
       #     WITH_V: false
 
       - name: Log commit messages being used
-        run: echo ${{github.event.commits}}
+        run: echo ${{join(github.event.commits.*.message, ' ')}}
 
       # - name: Bump version in package.json
       #   if: ${{steps.gitTagger.outputs.part && contains(join(github.event.commits.*.message, ' '), '#publish')}}
