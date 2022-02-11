@@ -31,13 +31,9 @@ jobs:
         uses: 'WyriHaximus/github-action-get-previous-tag@v1'
 
       - name: Bump version
-        run: |
-          npm --no-git-tag-version version ${{steps.previousTag.outputs.tag}}
-          git config --global user.name 'Temple Olowonigba'
-          git config --global user.email 'olowotemple@yahoo.com'
-          git add -A
-          git commit -m "Automated commit after bumping version in package.json"
-          git push
+        run: npm --no-git-tag-version version ${{steps.previousTag.outputs.tag}}
+
+      - uses: EndBug/add-and-commit@v8
 
       - name: Publish to npm
         run: npm publish --ignore-scripts
