@@ -13,6 +13,9 @@
     "dev": "nodemon lib/index.js",
     "lint": "eslint . --ext .ts",
     "prepublishOnly": "npm run build",
+    "preversion": "npm test && npm lint",
+    "version": "npm run build && git add .",
+    "postversion": "git push && git push --tags && rm -rf build/temp",
     "start": "node lib/index.js",
     "test": "jest --config ./jestconfig.json --verbose",
     "watch": "tsc -w"
