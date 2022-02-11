@@ -1,4 +1,4 @@
-# [yarnthisdir](https://www.npmjs.com/package/yarnthisdir) &middot; [![CI](https://github.com/Olowotemple/yarnthisdir/actions/workflows/pipeline.yml/badge.svg)](https://github.com/Olowotemple/yarnthisdir/actions/workflows/pipeline.yml) [![GitHub issues](https://img.shields.io/github/issues/Olowotemple/yarnthisdir)](https://github.com/Olowotemple/yarnthisdir/issues) ![license badge](https://img.shields.io/badge/license-MIT-blue)
+# [yarnthisdir](https://www.npmjs.com/package/yarnthisdir) &middot; [![main](https://github.com/Olowotemple/yarnthisdir/actions/workflows/main.yml/badge.svg)](https://github.com/Olowotemple/yarnthisdir/actions/workflows/main.yml) [![Publish Package to npmjs](https://github.com/Olowotemple/yarnthisdir/actions/workflows/publish.yml/badge.svg)](https://github.com/Olowotemple/yarnthisdir/actions/workflows/publish.yml) [![GitHub issues](https://img.shields.io/github/issues/Olowotemple/yarnthisdir)](https://github.com/Olowotemple/yarnthisdir/issues) ![license badge](https://img.shields.io/badge/license-MIT-blue)
 
 > Transform a project using [npm](https://docs.npmjs.com) to [Yarn](https://yarnpkg.com)
 
