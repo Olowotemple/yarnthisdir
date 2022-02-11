@@ -1,0 +1,47 @@
+name: main
+
+on:
+  push:
+    branches: [main, dev]
+
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Setup nodev14.17.6
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.17.6'
+
+      - name: Install packages
+        run: npm install
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Install Yarn Globally # used for the testing step below
+        run: npm install yarn --global
+
+      - name: Test
+        run: npm run test
+        env:
+          CI: true
+
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+      - name: Bump version and push tag
+        if: ${{github.event_name == 'push'}}
+        id: gitTagger
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: 'none'
+          WITH_V: false
