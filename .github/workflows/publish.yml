@@ -1,0 +1,38 @@
+name: Publish Package to npmjs
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Nodejs
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.17.6'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install prod packages
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Bump version
+        run: |
+          npm --no-git-tag-version version from-git
+          git config --global user.name 'Temple Olowonigba'
+          git config --global user.email 'olowotemple@yahoo.com'
+          git add -A
+          git commit -m "Automated commit after bumping version in package.json"
+          git push
+
+      - name: Publish to npm
+        run: npm publish --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

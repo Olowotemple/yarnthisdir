@@ -1,8 +1,8 @@
-name: CI
+name: main
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
 
   pull_request:
     branches: [main]
@@ -34,9 +34,6 @@ jobs:
         env:
           CI: true
 
-      - name: Build
-        run: npm run build
-
       - uses: actions/checkout@v2
         with:
           fetch-depth: '0'
@@ -48,14 +45,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: 'none'
           WITH_V: false
-
-      - name: Bump version in package.json
-        if: ${{steps.gitTagger.outputs.part && contains(join(github.event.commits.*.message, ' '), '#publish')}}
-        run: npm --no-git-tag-version version ${{steps.gitTagger.outputs.part}}
-
-      - name: Publish to npm
-        if: ${{ contains(join(github.event.commits.*.message, ' '), '#publish') }}
-        uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-          tag: ${{steps.gitTagger.outputs.tag}}
