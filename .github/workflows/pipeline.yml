@@ -37,28 +37,25 @@ jobs:
       - name: Build
         run: npm run build
 
-      # - uses: actions/checkout@v2
-      #   with:
-      #     fetch-depth: '0'
-      # - name: Bump version and push tag
-      #   if: ${{github.event_name == 'push'}}
-      #   id: gitTagger
-      #   uses: anothrNick/github-tag-action@1.36.0
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     DEFAULT_BUMP: 'none'
-      #     WITH_V: false
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+      - name: Bump version and push tag
+        if: ${{github.event_name == 'push'}}
+        id: gitTagger
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: 'none'
+          WITH_V: false
 
-      - name: Log commit messages being used
-        run: echo 'commit messages are ---> ${{join(github.event.commits.*.message, ' ')}}'
+      - name: Bump version in package.json
+        if: ${{steps.gitTagger.outputs.part && contains(join(github.event.commits.*.message, ' '), '#publish')}}
+        run: npm version ${{steps.gitTagger.outputs.part}}
 
-      # - name: Bump version in package.json
-      #   if: ${{steps.gitTagger.outputs.part && contains(join(github.event.commits.*.message, ' '), '#publish')}}
-      #   run: npm version ${{steps.gitTagger.outputs.part}}
-
-      # - name: Publish to npm
-      #   if: ${{ contains(join(github.event.commits.*.message, ' '), '#publish') }}
-      #   uses: JS-DevTools/npm-publish@v1
-      #   with:
-      #     token: ${{ secrets.NPM_TOKEN }}
-      #     tag: ${{steps.gitTagger.outputs.tag}}
+      - name: Publish to npm
+        if: ${{ contains(join(github.event.commits.*.message, ' '), '#publish') }}
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          tag: ${{steps.gitTagger.outputs.tag}}
