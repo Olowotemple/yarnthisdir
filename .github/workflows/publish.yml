@@ -31,10 +31,12 @@ jobs:
         run: npm --no-git-tag-version version ${{steps.previousTag.outputs.tag}}
 
       - name: Commit changes
-        uses: EndBug/add-and-commit@v8
-        with:
-          default_author: github_actions
-          pull: '--rebase --autostash'
+        run: |
+          git config --global user.name 'Publish workflow (GitHub Actions)'
+          git config --global user.email 'olowotemple@yahoo.com'
+          git add .
+          git commit -m "Bumped version in package.json causing the files package*.json to change"
+          git push
 
       - name: Build
         run: npm run build
