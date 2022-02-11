@@ -15,33 +15,14 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14.17.6'
-          registry-url: 'https://registry.npmjs.org'
 
       - name: Install prod packages
         run: npm ci
-
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Get previous tag
-        id: previousTag
-        uses: 'WyriHaximus/github-action-get-previous-tag@v1'
-
-      - name: Bump version
-        run: npm --no-git-tag-version version ${{steps.previousTag.outputs.tag}}
-
-      - name: Commit changes
-        run: |
-          git config --global user.name 'Publish workflow (GitHub Actions)'
-          git config --global user.email 'olowotemple@yahoo.com'
-          git add .
-          git commit -m "Bumped version in package.json causing the files package*.json to change"
-          git push
 
       - name: Build
         run: npm run build
 
       - name: Publish to npm
-        run: npm publish --ignore-scripts
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{secrets.NPM_TOKEN}}
