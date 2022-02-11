@@ -51,7 +51,7 @@ jobs:
 
       - name: Bump version in package.json
         if: ${{steps.gitTagger.outputs.part && contains(join(github.event.commits.*.message, ' '), '#publish')}}
-        run: npm version ${{steps.gitTagger.outputs.part}}
+        run: npm --no-git-tag-version version ${{steps.gitTagger.outputs.part}}
 
       - name: Publish to npm
         if: ${{ contains(join(github.event.commits.*.message, ' '), '#publish') }}
