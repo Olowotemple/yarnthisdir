@@ -31,9 +31,11 @@ yarnThisDir();
 
 Transforms a project that uses npm to Yarn.
 
-#### wd
+- ### parameters
 
-Type: `string`\
-Default: `process.cwd()`
+  - wd
+    - Type: `String`
+    - Default: `process.cwd()`
+    - Description: The current working directory
 
-The current working directory.
+> Pull Requests are highly welcome.
